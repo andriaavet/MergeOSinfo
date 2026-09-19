@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="dark scroll-smooth">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MergeOS - Custom Software Built For Your Business</title>
@@ -534,6 +535,10 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        const SUPABASE_URL = 'https://iiokkblhdwxeemvfkxfw.supabase.co/rest/v1/';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlpb2trYmxoZHd4ZWVtdmZreGZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MDkzNzIsImV4cCI6MjEwNTM4NTM3Mn0.m88qbPOR9QtW4YscDnLxRgT69WrglHgrkZ3B2Jbrm8o';
+
+const supabaseClient = supabase.createClient(https://iiokkblhdwxeemvfkxfw.supabase.co/rest/v1/, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlpb2trYmxoZHd4ZWVtdmZreGZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MDkzNzIsImV4cCI6MjEwNTM4NTM3Mn0.m88qbPOR9QtW4YscDnLxRgT69WrglHgrkZ3B2Jbrm8o);
         function safeInitIcons() {
             if (typeof lucide !== 'undefined' && lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
@@ -782,6 +787,38 @@
             alert('Thank you! We have received your details. One of our team members will give you a call shortly.');
             closeConsultationModal();
         }
+        document.getElementById('consultation-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.innerText = 'Sending...';
+
+  // Extract form inputs
+  const formData = {
+    full_name: document.getElementById('client-name').value,
+    business_type: document.getElementById('business-type').value,
+    phone: document.getElementById('client-phone').value,
+    notes: document.getElementById('client-notes')?.value || ''
+  };
+
+  // Insert row into Supabase
+  const { data, error } = await supabaseClient
+    .from('consultations')
+    .insert([formData]);
+
+  if (error) {
+    console.error('Supabase Error:', error);
+    alert('Something went wrong. Please try again!');
+    submitBtn.disabled = false;
+    submitBtn.innerText = 'Request Free Consultation';
+  } else {
+    alert('Thank you! Your request has been saved. We will reach out shortly.');
+    e.target.reset();
+    submitBtn.disabled = false;
+    submitBtn.innerText = 'Request Free Consultation';
+  }
+});
     </script>
 </body>
 </html>
