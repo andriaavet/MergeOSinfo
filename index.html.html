@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MergeOS - Custom Software Built For Your Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#16a34a',
+                            600: '#15803d',
+                            700: '#166534',
+                            accent: '#0284c7',
+                            dark: '#090d16',
+                            card: '#111827',
+                            border: '#1f2937',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #090d16;
+            color: #f3f4f6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .bg-grid {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 99px;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #16a34a;
+            transition: width 0.2s ease-in-out;
+            border-radius: 2px;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- NAVIGATION BAR -->
+    <header class="border-b border-brand-border bg-brand-dark/95 backdrop-blur-2xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-brand-accent flex items-center justify-center p-0.5 shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-brand-dark rounded-[10px] flex items-center justify-center">
+                        <i data-lucide="layout-grid" class="w-5 h-5 text-brand-500"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold text-xl tracking-tight text-white">Merge<span class="text-brand-500">OS</span></span>
+                        <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-500 border border-brand-500/30 font-semibold">100% Custom</span>
+                    </div>
+                    <p class="text-[11px] text-zinc-400 font-medium">Bespoke Operating Systems for Businesses</p>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-xs font-semibold text-zinc-300">
+                <a href="#why-custom" class="nav-link hover:text-white transition-colors">Why Custom?</a>
+                <a href="#interactive-demo" class="nav-link hover:text-white transition-colors">See Example Systems</a>
+                <a href="#how-we-work" class="nav-link hover:text-white transition-colors">How We Work With You</a>
+                <a href="#industries" class="nav-link hover:text-white transition-colors">Who We Help</a>
+                <a href="#faq" class="nav-link hover:text-white transition-colors">Questions</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-3">
+                <a href="tel:+18005550199" class="hidden sm:flex items-center space-x-2 text-xs font-semibold text-zinc-300 hover:text-white px-3 py-2">
+                    <i data-lucide="phone-call" class="w-4 h-4 text-brand-500"></i>
+                    <span>Speak With Us</span>
+                </a>
+
+                <button onclick="openConsultationModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-accent text-white font-bold text-xs hover:brightness-110 transition-all shadow-lg shadow-brand-500/20 flex items-center space-x-2">
+                    <i data-lucide="coffee" class="w-4 h-4"></i>
+                    <span>Book Free Consultation</span>
+                </button>
+
+                <!-- Mobile Navigation Toggle -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all" aria-label="Toggle Menu">
+                    <i data-lucide="menu" id="menu-icon-open" class="w-6 h-6"></i>
+                    <i data-lucide="x" id="menu-icon-close" class="w-6 h-6 hidden"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-brand-border bg-brand-dark px-6 py-6 space-y-4">
+            <nav class="flex flex-col space-y-3 text-sm font-medium text-zinc-300">
+                <a href="#why-custom" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-zinc-800 hover:text-white">Why Custom?</a>
+                <a href="#interactive-demo" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-zinc-800 hover:text-white">See Example Systems</a>
+                <a href="#how-we-work" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-zinc-800 hover:text-white">How We Work With You</a>
+                <a href="#industries" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-zinc-800 hover:text-white">Who We Help</a>
+                <a href="#faq" onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-zinc-800 hover:text-white">Questions</a>
+            </nav>
+            <div class="pt-4 border-t border-zinc-800">
+                <button onclick="openConsultationModal(); toggleMobileMenu();" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-accent text-white font-bold text-xs shadow-lg">
+                    Book Free Consultation
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 space-y-24 pb-20">
+
+        <!-- HERO SECTION -->
+        <section class="relative pt-12 md:pt-20 pb-12 overflow-hidden bg-grid">
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-6 text-center relative z-10 space-y-8">
+                
+                <!-- Pill Banner -->
+                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-panel text-xs text-zinc-300 shadow-xl">
+                    <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-ping"></span>
+                    <span class="font-medium text-white">No complex tech jargon. Built from scratch for your team.</span>
+                </div>
+
+                <!-- Main Headline -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.15] max-w-5xl mx-auto">
+                    Software Built Around <span class="bg-gradient-to-r from-brand-500 via-emerald-300 to-brand-accent bg-clip-text text-transparent">Your Business</span>. Exactly How You Want It.
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-base sm:text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed font-normal">
+                    Stop wrestling with confusing, generic software that forces you to change how you work. We sit down with you, understand your exact daily routine, and craft a simple screen your staff will love using from day one.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <button onclick="openConsultationModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-500 via-emerald-500 to-brand-accent text-white font-bold text-sm hover:scale-[1.02] transition-all shadow-xl shadow-brand-500/20 flex items-center justify-center space-x-3">
+                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                        <span>Tell Us What You Need Built</span>
+                    </button>
+                    <a href="#interactive-demo" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel text-zinc-200 font-semibold text-sm hover:text-white hover:border-zinc-500 transition-all flex items-center justify-center space-x-2">
+                        <i data-lucide="eye" class="w-5 h-5 text-brand-500"></i>
+                        <span>See Simple Example Systems</span>
+                    </a>
+                </div>
+
+                <!-- 3 Guarantees Box -->
+                <div class="pt-10 border-t border-zinc-800/80 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-1">
+                        <div class="font-bold text-white text-sm flex items-center gap-2">
+                            <i data-lucide="smile" class="w-4 h-4 text-brand-500"></i> Easy for Anyone
+                        </div>
+                        <p class="text-xs text-zinc-400">If your staff can send a text message, they can use our custom software. Guaranteed zero learning curve.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-1">
+                        <div class="font-bold text-white text-sm flex items-center gap-2">
+                            <i data-lucide="scissors" class="w-4 h-4 text-emerald-400"></i> No Unnecessary Features
+                        </div>
+                        <p class="text-xs text-zinc-400">We don't clutter your screen with 50 buttons you never touch. Only what your business actually needs.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-1">
+                        <div class="font-bold text-white text-sm flex items-center gap-2">
+                            <i data-lucide="heart-handshake" class="w-4 h-4 text-sky-400"></i> Personal Support
+                        </div>
+                        <p class="text-xs text-zinc-400">You get a real phone number to call whenever you need help or want to add something new to your system.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 1: THE COMPARISON (GENERIC VS CUSTOM) -->
+        <section id="why-custom" class="max-w-7xl mx-auto px-6 space-y-12">
+            <div class="text-center space-y-4 max-w-3xl mx-auto">
+                <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-500 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">The Real Difference</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Why Standard Software Frustrates Business Owners</h2>
+                <p class="text-zinc-400 text-sm sm:text-base">Most software is built for thousands of different companies at once, making it cluttered, complicated, and expensive.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Generic Software -->
+                <div class="p-8 rounded-3xl bg-rose-950/10 border border-rose-900/30 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
+                                <i data-lucide="x-circle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Off-the-Shelf Commercial Software</h3>
+                                <p class="text-xs text-rose-300">Generic One-Size-Fits-All Applications</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4 text-xs text-zinc-300">
+                        <li class="flex items-start space-x-3">
+                            <i data-lucide="x" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Too Many Cluttered Menus:</strong> Packed with hundreds of features you will never use, making simple tasks take twice as long.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i data-lucide="x" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Forces You to Change:</strong> You have to adapt your comfortable business process to match their rigid setup.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i data-lucide="x" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"></i>
+                            <span><strong>Never-Ending Monthly Fees:</strong> You keep paying high prices forever, even when you only use 10% of the product.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Custom Software Built By Us -->
+                <div class="p-8 rounded-3xl glass-panel border-brand-500/40 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-500 flex items-center justify-center border border-brand-500/30">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Custom Systems Built By MergeOS</h3>
+                                <p class="text-xs text-brand-500">Tailor-Made Specifically For You</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono text-brand-500 bg-brand-500/10 px-2.5 py-1 rounded border border-brand-500/30 font-bold">100% Tailored</span>
+                    </div>
+
+                    <ul class="space-y-4 text-xs text-zinc-300">
+                        <li class="flex items-start space-x-3">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                            <span><strong>Clean & Simple Interface:</strong> Only the buttons, forms, and reports your business uses every day. Clean and easy to read.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                            <span><strong>Matches Your Exact Routine:</strong> Built directly around how your front desk, manager, or drivers already work.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                            <span><strong>You Own Your System:</strong> Built to last, easy to expand as your business grows, with full personal support.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: INTERACTIVE BUSINESS DEMOS (HOTEL, RETAIL, SERVICES) -->
+        <section id="interactive-demo" class="max-w-7xl mx-auto px-6 space-y-8">
+            <div class="text-center space-y-3 max-w-3xl mx-auto">
+                <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-500 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Live Interactive Examples</span>
+                <h2 class="text-3xl font-extrabold text-white">How Simple Custom Software Feels In Practice</h2>
+                <p class="text-zinc-400 text-sm">Select a traditional business type below to see how straightforward a bespoke dashboard looks when it's built without clutter.</p>
+            </div>
+
+            <!-- Industry Selector Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <button onclick="switchIndustryDemo('hotel')" id="demo-tab-hotel" class="demo-tab px-5 py-3 rounded-xl bg-brand-500 text-white font-bold text-xs flex items-center space-x-2 transition-all shadow-lg shadow-brand-500/20">
+                    <i data-lucide="hotel" class="w-4 h-4"></i>
+                    <span>Boutique Hotel & Resort</span>
+                </button>
+                <button onclick="switchIndustryDemo('service')" id="demo-tab-service" class="demo-tab px-5 py-3 rounded-xl bg-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center space-x-2 transition-all">
+                    <i data-lucide="wrench" class="w-4 h-4"></i>
+                    <span>Local Service & Maintenance</span>
+                </button>
+                <button onclick="switchIndustryDemo('wholesale')" id="demo-tab-wholesale" class="demo-tab px-5 py-3 rounded-xl bg-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs flex items-center space-x-2 transition-all">
+                    <i data-lucide="package" class="w-4 h-4"></i>
+                    <span>Wholesale & Supply Warehouse</span>
+                </button>
+            </div>
+
+            <!-- MOCK SCREEN DISPLAY CONTAINER -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border-brand-border space-y-6">
+                <div id="industry-demo-content">
+                    <!-- JS injects custom view here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: OUR 3-STEP EASY PROCESS -->
+        <section id="how-we-work" class="max-w-7xl mx-auto px-6 space-y-12">
+            <div class="text-center space-y-4 max-w-2xl mx-auto">
+                <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-500 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Human-Centric Approach</span>
+                <h2 class="text-3xl font-extrabold text-white">How We Build Software For You</h2>
+                <p class="text-zinc-400 text-sm">You don't need to write specifications or understand tech terms. We handle all the heavy lifting.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="p-8 rounded-3xl bg-brand-card border border-brand-border space-y-4 relative">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-500/20 text-brand-500 font-extrabold text-xl flex items-center justify-center border border-brand-500/30">
+                        1
+                    </div>
+                    <h3 class="text-xl font-bold text-white">We Sit Down & Listen</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed">
+                        We visit your workplace or get on a phone call. Show us your paper logs, notebooks, or spreadsheet routines. We ask simple questions about how you run your daily operations.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="p-8 rounded-3xl bg-brand-card border border-brand-border space-y-4 relative">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 font-extrabold text-xl flex items-center justify-center border border-emerald-500/30">
+                        2
+                    </div>
+                    <h3 class="text-xl font-bold text-white">We Create Your Screen</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed">
+                        We design a custom system designed specifically for your team's eyes. Large, clear buttons, direct phone/WhatsApp links, and big text that anyone can read without training.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="p-8 rounded-3xl bg-brand-card border border-brand-border space-y-4 relative">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-500/20 text-sky-400 font-extrabold text-xl flex items-center justify-center border border-sky-500/30">
+                        3
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Hand-Held Support Always</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed">
+                        We train your team side-by-side until everyone feels comfortable. Whenever you need an extra report or button added next year, just call us and we update it right away.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: INDUSTRIES WE SPECIALIZE IN -->
+        <section id="industries" class="max-w-7xl mx-auto px-6 space-y-12">
+            <div class="text-center space-y-4 max-w-2xl mx-auto">
+                <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-500 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Tailored Solutions</span>
+                <h2 class="text-3xl font-extrabold text-white">Businesses We Regularly Help</h2>
+                <p class="text-zinc-400 text-sm">Whether you run a historic hotel, a regional warehouse, or a family clinic, we build systems that match your heritage.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Industry 1 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                        <i data-lucide="hotel" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">Hotels & Guest Houses</h3>
+                    <p class="text-xs text-zinc-400">Easy room reservation grids, guest check-in lists, automatic SMS welcome messages, and housekeeper schedules.</p>
+                </div>
+
+                <!-- Industry 2 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                        <i data-lucide="truck" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">Logistics & Distributors</h3>
+                    <p class="text-xs text-zinc-400">Simple order dispatches, driver route lists on mobile phones, signature collection, and customer invoice tracking.</p>
+                </div>
+
+                <!-- Industry 3 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">Medical Clinics & Practices</h3>
+                    <p class="text-xs text-zinc-400">Patient appointment booking, automated text reminders to reduce no-shows, and straightforward client records.</p>
+                </div>
+
+                <!-- Industry 4 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">Retail & Specialized Services</h3>
+                    <p class="text-xs text-zinc-400">Custom point-of-sale views, stock inventory alerts, custom customer loyalty tracking, and simple daily profits.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: FREQUENTLY ASKED QUESTIONS -->
+        <section id="faq" class="max-w-4xl mx-auto px-6 space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-3xl font-extrabold text-white">Questions From Business Owners</h2>
+                <p class="text-zinc-400 text-xs sm:text-sm">Clear, honest answers without technical jargon.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Q1 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-2 cursor-pointer transition-all hover:border-zinc-700" onclick="toggleFaq(1)">
+                    <div class="flex items-center justify-between font-bold text-sm sm:text-base text-white">
+                        <span>Do my employees need any computer training to use this?</span>
+                        <i data-lucide="chevron-down" id="faq-icon-1" class="w-5 h-5 text-zinc-400 transition-transform"></i>
+                    </div>
+                    <p id="faq-answer-1" class="text-xs sm:text-sm text-zinc-400 leading-relaxed hidden pt-3 border-t border-zinc-800">
+                        None at all. We design the screens to look like simple forms with big, clearly labeled buttons. If your staff can tap a touch screen or send an email, they will feel completely natural using your custom software in less than 10 minutes.
+                    </p>
+                </div>
+
+                <!-- Q2 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-2 cursor-pointer transition-all hover:border-zinc-700" onclick="toggleFaq(2)">
+                    <div class="flex items-center justify-between font-bold text-sm sm:text-base text-white">
+                        <span>I own a traditional business (like a hotel). Why not just use Excel or paper notebooks?</span>
+                        <i data-lucide="chevron-down" id="faq-icon-2" class="w-5 h-5 text-zinc-400 transition-transform"></i>
+                    </div>
+                    <p id="faq-answer-2" class="text-xs sm:text-sm text-zinc-400 leading-relaxed hidden pt-3 border-t border-zinc-800">
+                        Paper notebooks and Excel sheets easily get lost, double-booked, or damaged. A custom software screen gives everyone on your team (reception, cleaning staff, owners) the same updated information on phones, tablets, or computers in real-time — preventing missed bookings and costly mistakes.
+                    </p>
+                </div>
+
+                <!-- Q3 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-2 cursor-pointer transition-all hover:border-zinc-700" onclick="toggleFaq(3)">
+                    <div class="flex items-center justify-between font-bold text-sm sm:text-base text-white">
+                        <span>What happens if I want to change or add something new next year?</span>
+                        <i data-lucide="chevron-down" id="faq-icon-3" class="w-5 h-5 text-zinc-400 transition-transform"></i>
+                    </div>
+                    <p id="faq-answer-3" class="text-xs sm:text-sm text-zinc-400 leading-relaxed hidden pt-3 border-t border-zinc-800">
+                        Because we built the code from scratch for you, changing or adding a feature is fast and painless. You just give us a phone call or send a message, and our developers update your system without breaking what you already use.
+                    </p>
+                </div>
+
+                <!-- Q4 -->
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border space-y-2 cursor-pointer transition-all hover:border-zinc-700" onclick="toggleFaq(4)">
+                    <div class="flex items-center justify-between font-bold text-sm sm:text-base text-white">
+                        <span>How much does custom software cost compared to monthly subscriptions?</span>
+                        <i data-lucide="chevron-down" id="faq-icon-4" class="w-5 h-5 text-zinc-400 transition-transform"></i>
+                    </div>
+                    <p id="faq-answer-4" class="text-xs sm:text-sm text-zinc-400 leading-relaxed hidden pt-3 border-t border-zinc-800">
+                        Commercial software often charges per seat or per room, leading to thousands in recurring monthly costs every single year. With our custom builds, you pay a straightforward price for a system built exclusively for you, resulting in significant long-term savings.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTTOM CALL TO ACTION BANNER -->
+        <section class="max-w-5xl mx-auto px-6">
+            <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-brand-900/80 via-brand-dark to-brand-card border border-brand-500/30 text-center space-y-6 relative overflow-hidden">
+                <div class="max-w-2xl mx-auto space-y-3">
+                    <h2 class="text-3xl font-extrabold text-white">Let's Discuss Your Business Software Idea</h2>
+                    <p class="text-zinc-300 text-sm">Tell us what frustrates you about your current tools, and we will show you how simple a custom solution can be.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <button onclick="openConsultationModal()" class="px-8 py-4 rounded-xl bg-gradient-to-r from-brand-500 to-brand-accent text-white font-bold text-sm shadow-xl shadow-brand-500/20 hover:scale-[1.02] transition-all flex items-center space-x-2">
+                        <i data-lucide="calendar" class="w-5 h-5"></i>
+                        <span>Schedule Free In-Person or Phone Call</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-brand-border bg-brand-dark py-10 text-zinc-500 text-xs">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-7 h-7 rounded-lg bg-brand-500 flex items-center justify-center text-white font-black text-xs">M</div>
+                <span class="font-bold text-white text-sm">MergeOS Studio</span>
+                <span class="text-zinc-600">&bull; Tailor-made software for traditional & modern businesses</span>
+            </div>
+            <p>&copy; 2026 MergeOS Development Studio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- CONSULTATION REQUEST MODAL -->
+    <div id="consult-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-brand-card border border-brand-border p-8 rounded-3xl max-w-md w-full space-y-6 relative shadow-2xl">
+            <button onclick="closeConsultationModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="space-y-2">
+                <h3 class="text-2xl font-bold text-white">Tell Us About Your Business</h3>
+                <p class="text-xs text-zinc-400">Fill out this short form, and we will contact you for an easy, no-obligation conversation.</p>
+            </div>
+            <form onsubmit="handleConsultSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-zinc-300 font-semibold mb-1">Your Name</label>
+                    <input type="text" required placeholder="e.g. John Smith" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 font-semibold mb-1">Phone Number or Email</label>
+                    <input type="text" required placeholder="e.g. +1 (555) 019-2834 or john@hotel.com" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 font-semibold mb-1">What Type of Business Do You Run?</label>
+                    <select class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-brand-500">
+                        <option>Boutique Hotel or Resort</option>
+                        <option>Restaurant or Hospitality</option>
+                        <option>Local Services or Repairs</option>
+                        <option>Wholesale or Logistics Warehouse</option>
+                        <option>Medical or Health Practice</option>
+                        <option>Other Business</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-zinc-300 font-semibold mb-1">Briefly tell us what you would like to make easier:</label>
+                    <textarea rows="3" placeholder="e.g. 'We need a simple screen for our hotel receptionists to see who is arriving today without using complex software.'" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-brand-500"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-accent text-white font-bold text-xs hover:brightness-110 transition-all shadow-lg">
+                    Request Personal Consultation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        function safeInitIcons() {
+            if (typeof lucide !== 'undefined' && lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            safeInitIcons();
+            switchIndustryDemo('hotel');
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeConsultationModal();
+                }
+            });
+        });
+
+        /* --- MOBILE MENU --- */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-icon-open');
+            const closeIcon = document.getElementById('menu-icon-close');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                openIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                openIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        }
+
+        /* --- INDUSTRY DEMO SWITCHER --- */
+        const demoTemplates = {
+            hotel: `
+                <div class="space-y-6">
+                    <!-- Top Summary Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+                        <div>
+                            <span class="text-xs font-mono text-brand-500 font-bold uppercase tracking-wider">Example Built For Hotel Reception</span>
+                            <h3 class="text-2xl font-bold text-white">Grand Heritage Hotel & Suites</h3>
+                            <p class="text-xs text-zinc-400">Daily Reception & Guest Overview Screen</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Reception Mode Active
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Clean Metric Cards -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Arrivals Today</div>
+                            <div class="text-2xl font-black text-white mt-1">8 Guests</div>
+                            <div class="text-[11px] text-brand-500 mt-1">3 Already Checked-In</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Rooms Ready</div>
+                            <div class="text-2xl font-black text-emerald-400 mt-1">22 / 24</div>
+                            <div class="text-[11px] text-zinc-400 mt-1">2 Rooms In Cleaning</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Departures</div>
+                            <div class="text-2xl font-black text-amber-400 mt-1">5 Guests</div>
+                            <div class="text-[11px] text-zinc-400 mt-1">All Keys Returned</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Quick Guest Support</div>
+                            <button onclick="alert('Calling Front Desk Hotline...')" class="w-full mt-2 py-1.5 rounded bg-brand-500 text-white font-bold text-xs">
+                                Call Staff
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Table List -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                            <i data-lucide="user-check" class="w-4 h-4 text-brand-500"></i>
+                            Today's Expected Guests (Clear & Simple List)
+                        </h4>
+
+                        <div class="space-y-2">
+                            <div class="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:border-brand-500/50 transition-all">
+                                <div>
+                                    <div class="font-bold text-white text-base">Room 104 &bull; Mr. Robert Vance</div>
+                                    <div class="text-xs text-zinc-400">Arriving 2:00 PM &bull; 3 Nights &bull; Requested Extra Pillows</div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="alert('Welcome SMS sent to Mr. Vance!')" class="px-3 py-2 rounded-lg bg-zinc-800 text-zinc-200 hover:text-white text-xs font-semibold flex items-center gap-1.5">
+                                        <i data-lucide="message-square" class="w-3.5 h-3.5 text-emerald-400"></i> Send Welcome SMS
+                                    </button>
+                                    <button onclick="alert('Checked-In successfully!')" class="px-4 py-2 rounded-lg bg-brand-500 text-white text-xs font-bold">
+                                        Check In Guest
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:border-brand-500/50 transition-all">
+                                <div>
+                                    <div class="font-bold text-white text-base">Room 201 &bull; Sarah Jenkins Family</div>
+                                    <div class="text-xs text-zinc-400">Arriving 4:30 PM &bull; 5 Nights &bull; Breakfast Included</div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="alert('Welcome SMS sent to Mrs. Jenkins!')" class="px-3 py-2 rounded-lg bg-zinc-800 text-zinc-200 hover:text-white text-xs font-semibold flex items-center gap-1.5">
+                                        <i data-lucide="message-square" class="w-3.5 h-3.5 text-emerald-400"></i> Send Welcome SMS
+                                    </button>
+                                    <button onclick="alert('Checked-In successfully!')" class="px-4 py-2 rounded-lg bg-brand-500 text-white text-xs font-bold">
+                                        Check In Guest
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            service: `
+                <div class="space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+                        <div>
+                            <span class="text-xs font-mono text-brand-500 font-bold uppercase tracking-wider">Example Built For Dispatch & Service</span>
+                            <h3 class="text-2xl font-bold text-white">Citywide Climate Control & Heating</h3>
+                            <p class="text-xs text-zinc-400">Field Repair & Technician Dispatcher</p>
+                        </div>
+                        <span class="px-3 py-1.5 rounded-xl bg-sky-500/10 text-sky-400 text-xs font-semibold border border-sky-500/20">
+                            Dispatch Screen
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Jobs Scheduled Today</div>
+                            <div class="text-2xl font-black text-white mt-1">12 Jobs</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Technicians Active</div>
+                            <div class="text-2xl font-black text-emerald-400 mt-1">4 Drivers on Road</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Customer Invoices</div>
+                            <div class="text-2xl font-black text-brand-500 mt-1">Auto-Generated</div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
+                        <h4 class="font-bold text-white text-sm">Active Job Dispatch Sheet</h4>
+                        <div class="p-3 rounded-lg bg-zinc-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div>
+                                <div class="font-bold text-white">HVAC Maintenance - 142 Elm Street</div>
+                                <div class="text-xs text-zinc-400">Assigned Tech: Mike Lawson &bull; Scheduled 10:00 AM</div>
+                            </div>
+                            <button onclick="alert('Notification sent to Mike\'s phone!')" class="px-3 py-1.5 rounded bg-brand-500 text-white font-bold text-xs">
+                                Send Job to Tech Phone
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `,
+            wholesale: `
+                <div class="space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+                        <div>
+                            <span class="text-xs font-mono text-brand-500 font-bold uppercase tracking-wider">Example Built For Warehouse Management</span>
+                            <h3 class="text-2xl font-bold text-white">Apex Plumbing & Industrial Supplies</h3>
+                            <p class="text-xs text-zinc-400">Simple Stock & Order Fulfillment Sheet</p>
+                        </div>
+                        <span class="px-3 py-1.5 rounded-xl bg-purple-500/10 text-purple-400 text-xs font-semibold border border-purple-500/20">
+                            Warehouse Overview
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Orders To Pick Today</div>
+                            <div class="text-2xl font-black text-white mt-1">18 Orders</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Low Stock Alert</div>
+                            <div class="text-2xl font-black text-rose-400 mt-1">2 Items Low</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                            <div class="text-xs text-zinc-400">Delivery Status</div>
+                            <div class="text-2xl font-black text-emerald-400 mt-1">On Schedule</div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
+                        <h4 class="font-bold text-white text-sm">Low Stock Automatic Re-Order List</h4>
+                        <div class="p-3 rounded-lg bg-zinc-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div>
+                                <div class="font-bold text-white">3/4 Inch Copper Fittings (Box of 100)</div>
+                                <div class="text-xs text-zinc-400">Only 4 Boxes Remaining &bull; Preferred Supplier: Apex Metals</div>
+                            </div>
+                            <button onclick="alert('Purchase order created with 1 click!')" class="px-3 py-1.5 rounded bg-brand-500 text-white font-bold text-xs">
+                                1-Click Reorder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        function switchIndustryDemo(type) {
+            document.querySelectorAll('.demo-tab').forEach(tab => {
+                tab.classList.remove('bg-brand-500', 'text-white', 'shadow-lg');
+                tab.classList.add('bg-zinc-800', 'text-zinc-300');
+            });
+
+            const activeTab = document.getElementById(`demo-tab-${type}`);
+            if (activeTab) {
+                activeTab.classList.add('bg-brand-500', 'text-white', 'shadow-lg');
+                activeTab.classList.remove('bg-zinc-800', 'text-zinc-300');
+            }
+
+            const container = document.getElementById('industry-demo-content');
+            if (container && demoTemplates[type]) {
+                container.innerHTML = demoTemplates[type];
+                safeInitIcons();
+            }
+        }
+
+        /* --- FAQ ACCORDION --- */
+        function toggleFaq(id) {
+            const ans = document.getElementById(`faq-answer-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            if (ans.classList.contains('hidden')) {
+                ans.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                ans.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        /* --- CONSULTATION MODAL --- */
+        function openConsultationModal() {
+            document.getElementById('consult-modal').classList.remove('hidden');
+        }
+        function closeConsultationModal() {
+            document.getElementById('consult-modal').classList.add('hidden');
+        }
+        function handleConsultSubmit(e) {
+            e.preventDefault();
+            alert('Thank you! We have received your details. One of our team members will give you a call shortly.');
+            closeConsultationModal();
+        }
+    </script>
+</body>
+</html>
